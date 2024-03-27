@@ -63,6 +63,7 @@ from .socks import (
     ProxyType,
     sockssocket,
 )
+import defusedxml.ElementTree
 
 
 def register_socks_protocols():
@@ -2474,7 +2475,7 @@ def dfxp2srt(dfxp_data):
 
     def parse_node(node):
         target = TTMLPElementParser()
-        parser = xml.etree.ElementTree.XMLParser(target=target)
+        parser = defusedxml.ElementTree.XMLParser(target=target)
         parser.feed(xml.etree.ElementTree.tostring(node))
         return parser.close()
 
