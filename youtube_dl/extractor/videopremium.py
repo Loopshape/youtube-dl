@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 import re
-import random
 
 from .common import InfoExtractor
+import secrets
 
 
 class VideoPremiumIE(InfoExtractor):
@@ -37,7 +37,7 @@ class VideoPremiumIE(InfoExtractor):
 
         return {
             'id': video_id,
-            'url': 'rtmp://e%d.md.iplay.md/play' % random.randint(1, 16),
+            'url': 'rtmp://e%d.md.iplay.md/play' % secrets.SystemRandom().randint(1, 16),
             'play_path': 'mp4:%s.f4v' % video_id,
             'page_url': 'http://videopremium.tv/' + video_id,
             'player_url': 'http://videopremium.tv/uplayer/uppod.swf',

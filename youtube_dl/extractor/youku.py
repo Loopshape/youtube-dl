@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import base64
 import itertools
-import random
 import re
 import string
 import time
@@ -17,6 +16,7 @@ from ..utils import (
     ExtractorError,
     get_element_by_attribute,
 )
+import secrets
 
 
 class YoukuIE(InfoExtractor):
@@ -161,7 +161,7 @@ class YoukuIE(InfoExtractor):
     @staticmethod
     def get_ysuid():
         return '%d%s' % (int(time.time()), ''.join([
-            random.choice(string.ascii_letters) for i in range(3)]))
+            secrets.choice(string.ascii_letters) for i in range(3)]))
 
     def get_hd(self, fm):
         hd_id_dict = {

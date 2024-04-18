@@ -1,7 +1,5 @@
 # coding: utf-8
 from __future__ import unicode_literals
-
-import random
 import re
 
 from .common import InfoExtractor
@@ -12,6 +10,7 @@ from ..utils import (
     parse_age_limit,
     parse_duration,
 )
+import secrets
 
 
 class NRKBaseIE(InfoExtractor):
@@ -31,7 +30,7 @@ class NRKBaseIE(InfoExtractor):
         # Use fake IP from 37.191.128.0/17 in order to workaround geo
         # restriction
         def octet(lb=0, ub=255):
-            return random.randint(lb, ub)
+            return secrets.SystemRandom().randint(lb, ub)
         self._faked_ip = '37.191.%d.%d' % (octet(128), octet())
 
     def _real_extract(self, url):

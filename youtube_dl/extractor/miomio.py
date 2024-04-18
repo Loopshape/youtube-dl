@@ -1,8 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-import random
-
 from .common import InfoExtractor
 from ..compat import compat_urlparse
 from ..utils import (
@@ -11,6 +9,7 @@ from ..utils import (
     ExtractorError,
     sanitized_Request,
 )
+import secrets
 
 
 class MioMioIE(InfoExtractor):
@@ -60,7 +59,7 @@ class MioMioIE(InfoExtractor):
 
         # skipping the following page causes lags and eventually connection drop-outs
         self._request_webpage(
-            'http://www.miomio.tv/mioplayer/mioplayerconfigfiles/xml.php?id=%s&r=%s' % (id, random.randint(100, 999)),
+            'http://www.miomio.tv/mioplayer/mioplayerconfigfiles/xml.php?id=%s&r=%s' % (id, secrets.SystemRandom().randint(100, 999)),
             video_id)
 
         vid_config_request = sanitized_Request(
