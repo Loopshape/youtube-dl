@@ -33,7 +33,7 @@ class PandaTVIE(InfoExtractor):
             'http://www.panda.tv/api_room?roomid=%s' % video_id, video_id)
 
         error_code = config.get('errno', 0)
-        if error_code is not 0:
+        if error_code != 0:
             raise ExtractorError(
                 '%s returned error %s: %s'
                 % (self.IE_NAME, error_code, config['errmsg']),

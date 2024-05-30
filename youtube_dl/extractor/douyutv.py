@@ -112,7 +112,7 @@ class DouyuTVIE(InfoExtractor):
             headers={'Content-Type': 'application/x-www-form-urlencoded'})
 
         error_code = video_info.get('error', 0)
-        if error_code is not 0:
+        if error_code != 0:
             raise ExtractorError(
                 '%s reported error %i' % (self.IE_NAME, error_code),
                 expected=True)
