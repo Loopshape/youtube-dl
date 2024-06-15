@@ -10,6 +10,7 @@ import tempfile
 import threading
 import traceback
 import os.path
+from security import safe_command
 
 sys.path.insert(0, os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
 from youtube_dl.compat import (
@@ -334,7 +335,7 @@ class YoutubeDLBuilder(object):
 
     def build(self):
         try:
-            proc = subprocess.Popen([os.path.join(self.pythonPath, 'python.exe'), 'setup.py', 'py2exe'], stdin=subprocess.PIPE, cwd=self.buildPath)
+            proc = safe_command.run(subprocess.Popen, [os.path.join(self.pythonPath, 'python.exe'), 'setup.py', 'py2exe'], stdin=subprocess.PIPE, cwd=self.buildPath)
             proc.wait()
             #subprocess.check_output([os.path.join(self.pythonPath, 'python.exe'), 'setup.py', 'py2exe'],
             #                        cwd=self.buildPath)

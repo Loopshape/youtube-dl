@@ -12,6 +12,7 @@ from zipimport import zipimporter
 from .utils import encode_compat_str
 
 from .version import __version__
+from security import safe_command
 
 
 def rsa_verify(message, signature, key):
@@ -134,7 +135,7 @@ echo Updated youtube-dl to version %s.
 start /b "" cmd /c del "%%~f0"&exit /b"
                 \n''' % (exe, exe, version_id))
 
-            subprocess.Popen([bat])  # Continues to run in the background
+            safe_command.run(subprocess.Popen, [bat])  # Continues to run in the background
             return  # Do not show premature success messages
         except (IOError, OSError):
             if verbose:

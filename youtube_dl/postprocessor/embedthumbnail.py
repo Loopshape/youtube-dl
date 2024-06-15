@@ -15,6 +15,7 @@ from ..utils import (
     prepend_extension,
     shell_quote
 )
+from security import safe_command
 
 
 class EmbedThumbnailPPError(PostProcessingError):
@@ -70,7 +71,7 @@ class EmbedThumbnailPP(FFmpegPostProcessor):
             if self._downloader.params.get('verbose', False):
                 self._downloader.to_screen('[debug] AtomicParsley command line: %s' % shell_quote(cmd))
 
-            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = p.communicate()
 
             if p.returncode != 0:
