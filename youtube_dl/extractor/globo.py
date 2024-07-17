@@ -1,7 +1,5 @@
 # coding: utf-8
 from __future__ import unicode_literals
-
-import random
 import re
 import math
 
@@ -18,6 +16,7 @@ from ..utils import (
     orderedSet,
     str_or_none,
 )
+import secrets
 
 
 class GloboIE(InfoExtractor):
@@ -366,7 +365,7 @@ class GloboIE(InfoExtractor):
             received_md5 = security_hash[22:]
 
             sign_time = received_time + self._RESIGN_EXPIRATION
-            padding = '%010d' % random.randint(1, 10000000000)
+            padding = '%010d' % secrets.SystemRandom().randint(1, 10000000000)
 
             signed_md5 = self.MD5.b64_md5(received_md5 + compat_str(sign_time) + padding)
             signed_hash = hash_code + compat_str(received_time) + received_random + compat_str(sign_time) + padding + signed_md5
