@@ -20,7 +20,7 @@ class ExecAfterDownloadPP(PostProcessor):
         cmd = cmd.replace('{}', compat_shlex_quote(information['filepath']))
 
         self._downloader.to_screen('[exec] Executing command: %s' % cmd)
-        retCode = subprocess.call(cmd, shell=True)
+        retCode = subprocess.call(cmd, shell=False)
         if retCode != 0:
             raise PostProcessingError(
                 'Command returned error code %d' % retCode)
