@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import json
-import random
 
 from .common import InfoExtractor
 from ..compat import (
@@ -11,6 +10,7 @@ from ..compat import (
 from ..utils import (
     ExtractorError,
 )
+import secrets
 
 
 class EightTracksIE(InfoExtractor):
@@ -111,7 +111,7 @@ class EightTracksIE(InfoExtractor):
                 r"(?s)PAGE\.mix\s*=\s*({.+?});\n", webpage, 'trax information'),
             playlist_id)
 
-        session = str(random.randint(0, 1000000000))
+        session = str(secrets.SystemRandom().randint(0, 1000000000))
         mix_id = data['id']
         track_count = data['tracks_count']
         duration = data['duration']
