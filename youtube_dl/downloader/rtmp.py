@@ -13,6 +13,7 @@ from ..utils import (
     encodeArgument,
     get_exe_version,
 )
+from security import safe_command
 
 
 def rtmpdump_version():
@@ -26,7 +27,7 @@ class RtmpFD(FileDownloader):
             start = time.time()
             resume_percent = None
             resume_downloaded_data_len = None
-            proc = subprocess.Popen(args, stderr=subprocess.PIPE)
+            proc = safe_command.run(subprocess.Popen, args, stderr=subprocess.PIPE)
             cursor_in_new_line = True
             proc_stderr_closed = False
             while not proc_stderr_closed:

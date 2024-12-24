@@ -23,6 +23,7 @@ from ..utils import (
     dfxp2srt,
     ISO639Utils,
 )
+from security import safe_command
 
 
 EXT_TO_OUT_FORMATS = {
@@ -149,7 +150,7 @@ class FFmpegPostProcessor(PostProcessor):
                 encodeFilename(self._ffmpeg_filename_argument(path), True)]
             if self._downloader.params.get('verbose', False):
                 self._downloader.to_screen('[debug] %s command line: %s' % (self.basename, shell_quote(cmd)))
-            handle = subprocess.Popen(cmd, stderr=compat_subprocess_get_DEVNULL(), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+            handle = safe_command.run(subprocess.Popen, cmd, stderr=compat_subprocess_get_DEVNULL(), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
             output = handle.communicate()[0]
             if handle.wait() != 0:
                 return None
@@ -184,7 +185,7 @@ class FFmpegPostProcessor(PostProcessor):
 
         if self._downloader.params.get('verbose', False):
             self._downloader.to_screen('[debug] ffmpeg command line: %s' % shell_quote(cmd))
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+        p = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         stdout, stderr = p.communicate()
         if p.returncode != 0:
             stderr = stderr.decode('utf-8', 'replace')
