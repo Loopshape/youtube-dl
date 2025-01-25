@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import itertools
 import re
-import random
 
 from .common import InfoExtractor
 from ..compat import (
@@ -25,6 +24,7 @@ from ..utils import (
     update_url_query,
     urlencode_postdata,
 )
+import secrets
 
 
 class TwitchBaseIE(InfoExtractor):
@@ -497,7 +497,7 @@ class TwitchStreamIE(TwitchBaseIE):
             'allow_source': 'true',
             'allow_audio_only': 'true',
             'allow_spectre': 'true',
-            'p': random.randint(1000000, 10000000),
+            'p': secrets.SystemRandom().randint(1000000, 10000000),
             'player': 'twitchweb',
             'segment_preference': '4',
             'sig': access_token['sig'].encode('utf-8'),
