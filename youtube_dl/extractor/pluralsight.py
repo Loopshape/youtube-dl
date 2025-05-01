@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import collections
 import json
 import os
-import random
 
 from .common import InfoExtractor
 from ..compat import (
@@ -20,6 +19,7 @@ from ..utils import (
     srt_subtitles_timecode,
     urlencode_postdata,
 )
+import secrets
 
 
 class PluralsightBaseIE(InfoExtractor):
@@ -255,7 +255,7 @@ class PluralsightIE(PluralsightBaseIE):
                 # To somewhat reduce the probability of these consequences
                 # we will sleep random amount of time before each call to ViewClip.
                 self._sleep(
-                    random.randint(2, 5), display_id,
+                    secrets.SystemRandom().randint(2, 5), display_id,
                     '%(video_id)s: Waiting for %(timeout)s seconds to avoid throttling')
 
                 if not viewclip:
