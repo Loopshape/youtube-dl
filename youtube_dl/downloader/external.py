@@ -18,6 +18,7 @@ from ..utils import (
     handle_youtubedl_headers,
     check_executable,
 )
+from security import safe_command
 
 
 class ExternalFD(FileDownloader):
@@ -81,8 +82,7 @@ class ExternalFD(FileDownloader):
 
         self._debug_cmd(cmd)
 
-        p = subprocess.Popen(
-            cmd, stderr=subprocess.PIPE)
+        p = safe_command.run(subprocess.Popen, cmd, stderr=subprocess.PIPE)
         _, stderr = p.communicate()
         if p.returncode != 0:
             self.to_stderr(stderr.decode('utf-8', 'replace'))
@@ -115,7 +115,7 @@ class CurlFD(ExternalFD):
         self._debug_cmd(cmd)
 
         # curl writes the progress to stderr so don't capture it.
-        p = subprocess.Popen(cmd)
+        p = safe_command.run(subprocess.Popen, cmd)
         p.communicate()
         return p.returncode
 
@@ -275,7 +275,7 @@ class FFmpegFD(ExternalFD):
 
         self._debug_cmd(args)
 
-        proc = subprocess.Popen(args, stdin=subprocess.PIPE, env=env)
+        proc = safe_command.run(subprocess.Popen, args, stdin=subprocess.PIPE, env=env)
         try:
             retval = proc.wait()
         except KeyboardInterrupt:
