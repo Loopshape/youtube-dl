@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import base64
 import hashlib
 import json
-import random
 import time
 
 from .common import InfoExtractor
@@ -17,6 +16,7 @@ from ..utils import (
     int_or_none,
     strip_jsonp,
 )
+import secrets
 
 
 def md5_text(s):
@@ -143,7 +143,7 @@ class AnvatoIE(InfoExtractor):
             bytes_to_intlist(input_data[:64]), bytes_to_intlist(self._AUTH_KEY)))
 
         video_data_url += '&X-Anvato-Adst-Auth=' + base64.b64encode(auth_secret).decode('ascii')
-        anvrid = md5_text(time.time() * 1000 * random.random())[:30]
+        anvrid = md5_text(time.time() * 1000 * secrets.SystemRandom().random())[:30]
         payload = {
             'api': {
                 'anvrid': anvrid,
